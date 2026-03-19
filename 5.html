@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<body id="main-body">
+
+    <header id="main-header">
+        <nav>
+            <ul id="nav-list">
+                <li><a href="index.html">Proyecto 1</a></li>
+                <li><a href="2.html">Proyecto 2</a></li>
+                <li><a href="3.html">Proyecto 3</a></li>
+                <li><a href="4.html">Proyecto 4</a></li>
+                <li><a href="5.html">Proyecto 5</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<div id="container">
+  <h1>Sign Up</h1>
+  <form id="signupForm">
+
+    <div class="field">
+      <label>Name</label><br>
+      <input id="name" type="text" placeholder="Your name">
+      <p id="nameError" class="error"></p>
+    </div>
+
+    <div class="field">
+      <label>Email</label><br>
+      <input id="email" type="text" placeholder="name@example.com">
+      <p id="emailError" class="error"></p>
+    </div>
+
+    <div class="field">
+      <label>Password</label><br>
+      <input id="password" type="password" placeholder="Min 8 characters">
+      <p id="passwordError" class="error"></p>
+    </div>
+
+    <div class="field">
+      <label>Confirm Password</label><br>
+      <input id="confirm" type="password" placeholder="Repeat password">
+      <p id="confirmError" class="error"></p>
+    </div>
+
+    <button type="submit" id="btn">Sign Up</button>
+  </form>
+
+  <p id="result"></p>
+</div>
+
+<script>
+// --- ESTILO ULTRA SENCILLO (JS) ---
+document.body.style.cssText = "font-family:sans-serif; display:flex; justify-content:center; padding:40px; color:#333;";
+document.getElementById("container").style.width = "280px";
+
+// Estilo de los Inputs
+const inputs = document.querySelectorAll("input");
+inputs.forEach(i => {
+  i.style.cssText = "width:100%; padding:8px 0; margin:5px 0; border:none; border-bottom:1px solid #ccc; outline:none;";
+  i.onfocus = () => i.style.borderBottomColor = "#000";
+  i.onblur = () => i.style.borderBottomColor = "#ccc";
+});
+
+// Estilo de Etiquetas y Errores
+document.querySelectorAll("label").forEach(l => l.style.fontSize = "12px");
+document.querySelectorAll(".error").forEach(e => {
+  e.style.cssText = "color:red; font-size:11px; margin:2px 0 10px 0; height:12px;";
+});
+
+// Botón simple
+document.getElementById("btn").style.cssText = "width:100%; padding:10px; margin-top:10px; cursor:pointer; background:#333; color:#fff; border:none;";
+
+// --- LÓGICA DE VALIDACIÓN ---
+const form = document.getElementById("signupForm");
+
+form.onsubmit = function(e) {
+  e.preventDefault();
+  
+  let valid = true;
+  // Limpiar mensajes
+  document.querySelectorAll(".error").forEach(el => el.innerText = "");
+
+  // Validaciones básicas
+  if (document.getElementById("name").value.length < 2) {
+    document.getElementById("nameError").innerText = "Short name";
+    valid = false;
+  }
+  
+  const email = document.getElementById("email").value;
+  if (!email.includes("@")) {
+    document.getElementById("emailError").innerText = "Invalid email";
+    valid = false;
+  }
+
+  const p1 = document.getElementById("password").value;
+  const p2 = document.getElementById("confirm").value;
+  if (p1.length < 8) {
+    document.getElementById("passwordError").innerText = "Min 8 characters";
+    valid = false;
+  } else if (p1 !== p2) {
+    document.getElementById("confirmError").innerText = "No match";
+    valid = false;
+  }
+
+  if (valid) {
+    document.getElementById("result").innerHTML = "<b>Success!</b>";
+    document.getElementById("result").style.color = "green";
+    form.reset();
+  }
+};
+</script>
+
+</body>
+</html>

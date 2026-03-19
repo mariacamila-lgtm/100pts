@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<body id="vuerpo">
+
+    <header id="main-header">
+        <nav>
+            <ul id="nav-list">
+                <li><a href="index.html">Proyecto 1</a></li>
+                <li><a href="2.html">Proyecto 2</a></li>
+                <li><a href="3.html">Proyecto 3</a></li>
+                <li><a href="4.html">Proyecto 4</a></li>
+                <li><a href="5.html">Proyecto 5</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<div id="contenedor">
+    <h1>JavaScript Project</h1>
+    <h2>Counter</h2>
+
+    <div id="barra-fondo">
+        <div id="barra-relleno"></div>
+    </div>
+
+    <p id="count" style="font-size:40px;">0</p>
+
+    <button onclick="increaseCount()">+</button>
+    <button onclick="decreaseCount()">-</button>
+    <button onclick="resetCount()">Reset</button>
+    <button onclick="saveCount()">Save</button>
+    <button onclick="loadCount()">Load</button>
+</div>
+
+<script>
+// --- ESTILO DEL MENÚ (Inyectado por JS) ---
+const navList = document.getElementById("nav-list");
+const header = document.getElementById("main-header");
+
+header.style.cssText = "position:fixed; top:0; left:0; width:100%; background:white; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:10px 0; z-index:1000;";
+navList.style.cssText = "list-style:none; display:flex; justify-content:center; margin:0; padding:0; gap:20px;";
+
+document.querySelectorAll("#nav-list a").forEach(link => {
+    link.style.cssText = "text-decoration:none; color:#666; font-weight:bold; font-size:14px; padding:8px 12px; border-radius:5px; transition:0.3s;";
+    
+    // Efecto visual al pasar el mouse
+    link.onmouseover = () => {
+        link.style.backgroundColor = "#eee";
+        link.style.color = "#000";
+    };
+    link.onmouseout = () => {
+        link.style.backgroundColor = "transparent";
+        link.style.color = "#666";
+    };
+});
+
+// --- ESTILO DEL CUERPO Y CONTENEDOR ---
+document.body.style.cssText = "font-family:sans-serif; text-align:center; padding-top:100px; background-color:#f4f4f4; margin:0;";
+
+const cont = document.getElementById("contenedor");
+cont.style.cssText = "background:white; display:inline-block; padding:30px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.05);";
+
+const barraFondo = document.getElementById("barra-fondo");
+barraFondo.style.cssText = "width:300px; height:12px; background:#eee; margin:20px auto; border-radius:10px; overflow:hidden;";
+
+const barraRelleno = document.getElementById("barra-relleno");
+barraRelleno.style.cssText = "width:0%; height:100%; background:#4caf50; transition: 0.3s;";
+
+document.querySelectorAll("button").forEach(b => {
+    b.style.cssText = "padding:10px 20px; margin:5px; cursor:pointer; border:1px solid #ddd; background:white; border-radius:5px; font-weight:bold; transition:0.2s;";
+    b.onmouseover = () => b.style.backgroundColor = "#f9f9f9";
+});
+
+// --- TU LÓGICA BASE ---
+let count = 0;
+
+function updateCount() {
+  document.getElementById("count").innerHTML = count;
+  let porcentaje = Math.abs(count) * 10; 
+  if (porcentaje > 100) porcentaje = 100;
+  barraRelleno.style.width = porcentaje + "%";
+  barraRelleno.style.backgroundColor = count < 0 ? "#f44336" : "#4caf50";
+}
+
+function increaseCount() { count++; updateCount(); }
+function decreaseCount() { count--; updateCount(); }
+function resetCount() { count = 0; updateCount(); }
+function saveCount() { localStorage.setItem("count", count); }
+function loadCount() {
+  let saved = localStorage.getItem("count");
+  if (saved !== null) count = Number(saved);
+  updateCount();
+}
+</script>
+
+</body>
+</html>

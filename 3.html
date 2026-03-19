@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<body id="main-body">
+
+    <header id="main-header">
+        <nav>
+            <ul id="nav-list">
+                <li><a href="index.html">Proyecto 1</a></li>
+                <li><a href="2.html">Proyecto 2</a></li>
+                <li><a href="3.html">Proyecto 3</a></li>
+                <li><a href="4.html">Proyecto 4</a></li>
+                <li><a href="5.html">Proyecto 5</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<div id="app-container">
+    <h1 id="title">Mis Tareas</h1>
+    
+    <div id="input-group">
+        <input id="task" placeholder="¿Qué hay que hacer?">
+        <button id="addBtn" onclick="addTask()">Añadir</button>
+    </div>
+
+    <ul id="list"></ul>
+
+    <button id="clearBtn" onclick="clearAll()">Vaciar lista</button>
+</div>
+
+<script>
+const body = document.body;
+const container = document.getElementById("app-container");
+const input = document.getElementById("task");
+const list = document.getElementById("list");
+const addBtn = document.getElementById("addBtn");
+const clearBtn = document.getElementById("clearBtn");
+
+
+body.style.cssText = "background:#f4f7f6; display:flex; justify-content:center; padding:50px; font-family: 'Segoe UI', Arial, sans-serif; margin:0;";
+container.style.cssText = "background:white; padding:30px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.05); width:100%; max-width:400px; text-align:center;";
+
+
+input.style.cssText = "padding:12px; border:1px solid #ddd; border-radius:6px; width:65%; outline:none; font-size:14px;";
+addBtn.style.cssText = "padding:12px 18px; border:none; border-radius:6px; background:#2ecc71; color:white; font-weight:bold; cursor:pointer; margin-left:5px;";
+
+
+list.style.cssText = "list-style:none; padding:0; margin-top:20px; text-align:left;";
+
+
+clearBtn.style.cssText = "background:none; border:none; color:#95a5a6; cursor:pointer; text-decoration:underline; font-size:13px; margin-top:15px;";
+
+
+let tasks = [];
+
+function addTask() {
+    const val = input.value.trim();
+    if (val !== "") {
+        const li = document.createElement("li");
+        
+       
+        li.style.cssText = "background:#fff; border:1px solid #eee; padding:12px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; transition:0.2s;";
+        
+        li.innerHTML = `
+            <span style="cursor:pointer; flex-grow:1;">${val}</span>
+            <button onclick="this.parentElement.remove()" style="border:none; background:#ff7675; color:white; border-radius:4px; cursor:pointer; padding:2px 8px;">×</button>
+        `;
+
+        
+        const span = li.querySelector("span");
+        span.onclick = () => {
+            span.style.textDecoration = span.style.textDecoration === "line-through" ? "none" : "line-through";
+            span.style.color = span.style.color === "rgb(189, 195, 199)" ? "#333" : "#bdc3c7";
+        };
+
+        list.appendChild(li);
+        input.value = "";
+    }
+}
+
+function clearAll() {
+    if(list.children.length > 0) {
+        list.innerHTML = "";
+    }
+}
+
+// Enter para añadir
+input.onkeypress = (e) => { if(e.key === "Enter") addTask(); };
+</script>
+
+</body>
+</html>
